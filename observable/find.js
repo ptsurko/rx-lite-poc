@@ -1,9 +1,10 @@
-import Observer from './../observer';
 import Observable from './../observable';
+import Subscriber from './../subscriber';
 
 Observable.prototype.find = function(predicate) {
   return new Observable(observer =>
-      this.subscribe(new Observer(
+      this.subscribe(new Subscriber(
+          observer,
           value => {
             if (predicate(value)) {
               observer.next(value);

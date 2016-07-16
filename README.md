@@ -3,7 +3,7 @@
 ## Samples
 
 ```javascript
-Rx.Observable.from([1,2,3,4])
+Rx.Observable.from([1, 2, 3, 4])
     .map(value => value * 10)
     .map(value => value + 1)
     .find(value => value > 25)
@@ -11,8 +11,12 @@ Rx.Observable.from([1,2,3,4])
 ```
 
 ```javascript
-Rx.Observable.fromRange(1, 10)
+Rx.Observable.fromRange(1, 20)
+    .map(val => val + 1)
     .filter(val => val % 2 == 0)
+    .do(val => console.log(val))
+    .take(5)
+    .reduce((val, sum) => sum + val, 0)
     .subscribe(val => console.log(val), (error) => {}, () => console.log('completed'));
 ```
 
@@ -23,8 +27,24 @@ Rx.Observable.from([1, 2, 3, 4])
 ```
 
 ```javascript
+Rx.Observable.fromRange(1, 3)
+    .flatMap(function (x) {
+      return Rx.Observable.fromRange(x, x + 1);
+    })
+    .subscribe(val => console.log(val), (error) => {}, () => console.log('completed'));
+```
+
+```javascript
+Rx.Observable.interval(1000)
+    .take(3)
+    .merge(Rx.Observable.interval(1100).take(2))
+    .map(() => 'tick')
+    .subscribe(val => console.log(val), (error) => {}, () => console.log('completed'));
+```
+
+```javascript
 Rx.Observable.fromEvent(document.getElementById('clickme'), 'click')
-    .take(2)
+    .takeUntil(Rx.Observable.interval(4000))
     .subscribe(val => console.log('clicked 1'), (error) => {}, () => console.log('completed'));
 ```
 

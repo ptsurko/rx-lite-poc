@@ -15,6 +15,7 @@ function Disposable() {
 
 Disposable.prototype.dispose = function() {
   if (this.disposables_.length && !this.isDisposed_) {
+    this.isDisposed_ = true;
     this.disposables_.forEach(disposable => {
       if (disposable instanceof Disposable) {
         disposable.dispose();
@@ -22,7 +23,6 @@ Disposable.prototype.dispose = function() {
         disposable();
       }
     });
-    this.isDisposed_ = true;
   }
 };
 

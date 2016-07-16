@@ -1,5 +1,5 @@
 import Disposable from './../disposable';
-import Observer from './../observer';
+import Subscriber from './../subscriber';
 import Observable from './../observable';
 
 Observable.prototype.flatMap = function(project) {
@@ -11,7 +11,8 @@ Observable.prototype.flatMap = function(project) {
         observer.complete();
       }
     }
-    let subscription = this.subscribe(new Observer(
+    let subscription = this.subscribe(new Subscriber(
+        observer,
         value => {
           let observable = project(value);
           observablesCount += 1;

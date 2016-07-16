@@ -12,6 +12,7 @@
   },
   "rules": {
     "no-var": "error",
+    "no-constant-condition": 0,
     "prefer-const": 0,
     "indent": ["error", 2],
     "linebreak-style": ["error", "unix"],

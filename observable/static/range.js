@@ -1,10 +1,21 @@
 import Observable from './../../observable';
 
-export default function createFromRange(start, end, step) {
+export default function createFromRange(start, count, step) {
   return new Observable(observer => {
-    for (let i = start; i < end; i += step ? step : 1) {
-      observer.next(i);
+    step = step || 1;
+    let value = start;
+    while (true) {
+      if (count == 0) {
+        observer.complete();
+        break;
+      }
+      observer.next(value);
+      value += step;
+      count -= 1;
+
+      if (observer.isUnsubscribed) {
+        break;
+      }
     }
-    observer.complete();
   });
 }

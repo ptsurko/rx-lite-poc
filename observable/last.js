@@ -1,11 +1,12 @@
-import Observer from './../observer';
 import Observable from './../observable';
+import Subscriber from './../subscriber';
 
 Observable.prototype.last = function() {
   return new Observable(observer => {
     let lastValue;
     let hadAnyValue = false;
-    return this.subscribe(new Observer(
+    return this.subscribe(new Subscriber(
+        observer,
         value => {
           lastValue = value;
           hadAnyValue = true;

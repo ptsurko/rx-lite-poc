@@ -3,12 +3,13 @@ function Observer(onNext, onError, onComplete) {
   this.onNext_ = onNext;
   this.onError_ = onError;
   this.onComplete_ = onComplete;
-  this.unsubscribed_ = false;
+  this.isUnsubscribed = false;
+  this.completed_ = false;
   this.unsubscribeFn = null;
 }
 
 Observer.prototype.next = function(value) {
-  if (this.onNext_ && !this.unsubscribed_) {
+  if (this.onNext_ && !this.isUnsubscribed) {
     try {
       this.onNext_(value);
     } catch(err) {
@@ -19,7 +20,7 @@ Observer.prototype.next = function(value) {
 };
 
 Observer.prototype.error = function(error) {
-  if (this.onError_ && !this.unsubscribed_) {
+  if (this.onError_ && !this.isUnsubscribed) {
     try {
       this.onError_(error);
     } finally {
@@ -29,7 +30,7 @@ Observer.prototype.error = function(error) {
 };
 
 Observer.prototype.complete = function() {
-  if (this.onComplete_ && !this.unsubscribed_) {
+  if (this.onComplete_ && !this.isUnsubscribed) {
     try {
       this.onComplete_();
     } finally {
@@ -39,10 +40,13 @@ Observer.prototype.complete = function() {
 };
 
 Observer.prototype.unsubscribe = function() {
-  if (!this.unsubscribed_ && this.unsubscribeFn) {
-    this.unsubscribeFn();
+  if (!this.isUnsubscribed) {
+    this.isUnsubscribed = true;
+
+    if (this.unsubscribeFn) {
+      this.unsubscribeFn();
+    }
   }
-  this.unsubscribed_ = true;
 };
 
 export default Observer;

@@ -12,7 +12,7 @@ Observable.prototype.subscribe = function() {
 
   let subscription = this.subscribeInternal(observer);
   if (subscription instanceof Disposable) {
-    observer.unsubscribe = function() {
+    observer.unsubscribeFn = function() {
       subscription.dispose();
     };
   }
