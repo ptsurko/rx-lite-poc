@@ -1,4 +1,5 @@
-# Rx Lite - lightweight version of Rx library.
+# Rx Lite
+Rx Lite - my own implementation of some methods from Rx library just for educational purpose.
 
 ## Samples
 
@@ -23,7 +24,7 @@ Rx.Observable.fromRange(1, 20)
 ```javascript
 Rx.Observable.from([1, 2, 3, 4])
     .concat(Rx.Observable.from([10, 20, 30, 40]), Rx.Observable.from([100, 200, 300, 400]))
-    .subscribe(val => console.log(val), (error) => {}, () => console.log('completed'));
+    .subscribe(Rx.Observer.create(val => console.log(val), (error) => {}, () => console.log('completed')));
 ```
 
 ```javascript
@@ -40,6 +41,16 @@ Rx.Observable.interval(1000)
     .merge(Rx.Observable.interval(1100).take(2))
     .map(() => 'tick')
     .subscribe(val => console.log(val), (error) => {}, () => console.log('completed'));
+```
+
+```javascript
+var source = Rx.Observable.interval(1000)
+    .take(2)
+    .do(() => console.log('Side effect'))
+    .publish();
+
+source.subscribe(val => console.log('publish1 tick'));
+source.subscribe(val => console.log('publish2 tick'));
 ```
 
 ```javascript

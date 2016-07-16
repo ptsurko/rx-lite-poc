@@ -1,4 +1,4 @@
-import extend from './extend';
+import extend from './utils/extend';
 import Observer from './observer';
 
 function CompositeObserver() {
@@ -24,6 +24,12 @@ CompositeObserver.prototype.getObserversLength = function() {
 
 CompositeObserver.prototype.remove = function(observer) {
   this.observers_.splice(this.observers_.indexOf(observer), 1);
+};
+
+CompositeObserver.prototype.unsubscribe = function() {
+  if (!this.isUnsubscribed) {
+    this.observers_.forEach(o => o.unsubscribe());
+  }
 };
 
 export default CompositeObserver;

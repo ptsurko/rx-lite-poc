@@ -1,5 +1,5 @@
 
-import extend from './extend';
+import extend from './utils/extend';
 import Observer from './observer';
 
 function Subscriber(parent, onNext, onError, onComplete) {

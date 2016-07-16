@@ -19,6 +19,7 @@ import './observable/do';
 import './observable/concat';
 import './observable/flatmap';
 import './observable/merge';
+import './observable/publish';
 
 let Rx = {
   Observable: {

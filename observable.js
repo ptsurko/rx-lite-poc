@@ -10,7 +10,11 @@ Observable.prototype.subscribe = function() {
   let observer = (arguments.length == 1 && arguments[0] instanceof Observer) ?
                  arguments[0] : new Observer(arguments[0], arguments[1], arguments[2]);
 
-  let subscription = this.subscribeInternal(observer);
+  return this.subscribeInternal(observer);
+};
+
+Observable.prototype.subscribeInternal = function(observer) {
+  let subscription = this.subscribeFn_(observer);
   if (subscription instanceof Disposable) {
     observer.unsubscribeFn = function() {
       subscription.dispose();
@@ -18,10 +22,6 @@ Observable.prototype.subscribe = function() {
   }
 
   return new Disposable(() => observer.unsubscribe());
-};
-
-Observable.prototype.subscribeInternal = function(observer) {
-  return this.subscribeFn_(observer);
 };
 
 // function Observable(subscribeFn) {
